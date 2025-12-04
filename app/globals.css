@@ -13,9 +13,18 @@ body {
     url('/wall-texture.jpg');
   background-size: cover;
   background-position: center;
+  background-attachment: fixed;
   min-height: 100vh;
   font-family: 'Covered By Your Grace', cursive;
-  overflow: hidden;  /* Prevent scrolling */
+  overflow: hidden;  /* Prevent scrolling on desktop */
+}
+
+/* Allow scrolling on mobile landscape */
+@media screen and (max-width: 1024px) and (orientation: landscape) {
+  body {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }
 
 .letter-wall {
@@ -79,16 +88,16 @@ body {
 
 /* Mobile Landscape Orientation Styles */
 @media screen and (max-width: 1024px) and (orientation: landscape) {
-  body {
-    overflow: hidden;
-  }
-
   .letter-wall {
-    padding: 1rem 0.5rem;
+    padding: 1rem 0.5rem 2rem 0.5rem;
+    min-height: 100vh;
+    height: auto;
   }
 
   .letter-rows-container {
     gap: 1rem;
+    justify-content: flex-start;
+    padding: 3rem 0 1rem 0;
   }
 
   .letter-row {
