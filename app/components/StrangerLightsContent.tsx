@@ -703,7 +703,7 @@ export default function StrangerLightsContent() {
           <WelcomeTitle>Welcome to the <UpsideDownText>Upside Down</UpsideDownText></WelcomeTitle>
           <WelcomeList>
             <WelcomeListItem>
-              Click lights to spell your message
+              Click letters to spell your message
             </WelcomeListItem>
             <WelcomeListItem>
               Share the URL with friends
