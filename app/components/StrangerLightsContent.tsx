@@ -6,6 +6,7 @@ import styled from '@emotion/styled';
 import Letter from './Letter';
 import { ShareButton } from './ShareButton';
 import { encodeMessage, decodeMessage } from '../utils/urlHelper';
+import RotatePrompt from './RotatePrompt';
 
 const MessageBox = styled.div`
   flex: 1;
@@ -55,6 +56,26 @@ const MessageBox = styled.div`
         inset 0 0 10px rgba(255, 0, 0, 0.1);
     }
   }
+
+  @media screen and (max-width: 1024px) and (orientation: landscape) {
+    font-size: 1.5rem;
+    height: 45px;
+    padding: 0.5rem;
+    letter-spacing: 2px;
+  }
+
+  @media screen and (max-width: 768px) and (orientation: landscape) {
+    font-size: 1.2rem;
+    height: 40px;
+    padding: 0.4rem;
+    letter-spacing: 1px;
+  }
+
+  @media screen and (max-width: 480px) and (orientation: landscape) {
+    font-size: 1rem;
+    height: 35px;
+    padding: 0.3rem;
+  }
 `;
 
 const MessageContainer = styled.div`
@@ -66,6 +87,23 @@ const MessageContainer = styled.div`
   width: 90%;
   max-width: 900px;
   margin: 2rem auto;
+
+  @media screen and (max-width: 1024px) and (orientation: landscape) {
+    gap: 0.5rem;
+    width: 95%;
+    margin: 1rem auto;
+  }
+
+  @media screen and (max-width: 768px) and (orientation: landscape) {
+    gap: 0.4rem;
+    width: 98%;
+    margin: 0.8rem auto;
+  }
+
+  @media screen and (max-width: 480px) and (orientation: landscape) {
+    gap: 0.3rem;
+    margin: 0.5rem auto;
+  }
 `;
 
 const IconButton = styled.button`
@@ -90,6 +128,24 @@ const IconButton = styled.button`
     0 0 5px rgba(255, 0, 0, 0.8),
     0 0 10px rgba(255, 0, 0, 0.5);
   animation: buttonFlicker 4s infinite;
+
+  @media screen and (max-width: 1024px) and (orientation: landscape) {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+
+  @media screen and (max-width: 768px) and (orientation: landscape) {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+
+  @media screen and (max-width: 480px) and (orientation: landscape) {
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;
+  }
 
   @keyframes buttonFlicker {
     0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
@@ -187,6 +243,24 @@ const RevealButton = styled.button`
     0 0 8px rgba(255, 0, 0, 0.8),
     0 0 15px rgba(255, 0, 0, 0.5),
     0 0 25px rgba(255, 0, 0, 0.3);
+
+  @media screen and (max-width: 1024px) and (orientation: landscape) {
+    padding: 1.2rem 2.5rem;
+    font-size: 2rem;
+    letter-spacing: 4px;
+  }
+
+  @media screen and (max-width: 768px) and (orientation: landscape) {
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+    letter-spacing: 3px;
+  }
+
+  @media screen and (max-width: 480px) and (orientation: landscape) {
+    padding: 0.8rem 1.5rem;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+  }
 
   &::before {
     content: '';
@@ -297,6 +371,23 @@ const RevealSubtext = styled.div`
     0 0 10px rgba(255, 0, 0, 0.3);
   animation: subtextFlicker 6s infinite;
 
+  @media screen and (max-width: 1024px) and (orientation: landscape) {
+    margin-top: 1rem;
+    font-size: 1rem;
+    letter-spacing: 2px;
+  }
+
+  @media screen and (max-width: 768px) and (orientation: landscape) {
+    margin-top: 0.8rem;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+  }
+
+  @media screen and (max-width: 480px) and (orientation: landscape) {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+  }
+
   @keyframes subtextFlicker {
     0%, 100% {
       opacity: 0.8;
@@ -339,6 +430,21 @@ const WelcomePopup = styled.div`
     0 0 60px rgba(255, 0, 0, 0.4),
     inset 0 0 20px rgba(255, 0, 0, 0.1);
   animation: popupFlicker 4s infinite;
+
+  @media screen and (max-width: 1024px) and (orientation: landscape) {
+    padding: 1.5rem 2rem;
+    max-width: 90%;
+  }
+
+  @media screen and (max-width: 768px) and (orientation: landscape) {
+    padding: 1.2rem 1.5rem;
+    max-width: 95%;
+  }
+
+  @media screen and (max-width: 480px) and (orientation: landscape) {
+    padding: 1rem;
+    max-width: 95%;
+  }
 
   /* Spooky tree branches creeping from top-left */
   &::before {
@@ -427,6 +533,24 @@ const WelcomeTitle = styled.h2`
     0 0 10px rgba(255, 0, 0, 0.6),
     0 0 20px rgba(255, 0, 0, 0.4),
     0 0 30px rgba(255, 0, 0, 0.2);
+
+  @media screen and (max-width: 1024px) and (orientation: landscape) {
+    font-size: 1.8rem;
+    margin: 0 0 1rem 0;
+    letter-spacing: 3px;
+  }
+
+  @media screen and (max-width: 768px) and (orientation: landscape) {
+    font-size: 1.5rem;
+    margin: 0 0 0.8rem 0;
+    letter-spacing: 2px;
+  }
+
+  @media screen and (max-width: 480px) and (orientation: landscape) {
+    font-size: 1.2rem;
+    margin: 0 0 0.6rem 0;
+    letter-spacing: 1px;
+  }
 `;
 
 const UpsideDownText = styled.span`
@@ -461,11 +585,24 @@ const Footer = styled.footer`
     }
   }
 
-  @media (max-width: 768px) {
-    flex-direction: column;
-    gap: 0.5rem;
-    font-size: 0.8rem;
+  @media screen and (max-width: 1024px) and (orientation: landscape) {
     padding: 0 1rem;
+    font-size: 0.75rem;
+    top: 0.5rem;
+  }
+
+  @media screen and (max-width: 768px) and (orientation: landscape) {
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 0.5rem;
+    font-size: 0.65rem;
+    padding: 0 0.5rem;
+    top: 0.3rem;
+  }
+
+  @media screen and (max-width: 480px) and (orientation: landscape) {
+    font-size: 0.6rem;
+    padding: 0 0.3rem;
   }
 `;
 
@@ -515,6 +652,14 @@ const WelcomeList = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0 0 2rem 0;
+
+  @media screen and (max-width: 1024px) and (orientation: landscape) {
+    margin: 0 0 1rem 0;
+  }
+
+  @media screen and (max-width: 768px) and (orientation: landscape) {
+    margin: 0 0 0.8rem 0;
+  }
 `;
 
 const WelcomeListItem = styled.li`
@@ -533,6 +678,24 @@ const WelcomeListItem = styled.li`
     position: absolute;
     left: 0;
     filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.6));
+  }
+
+  @media screen and (max-width: 1024px) and (orientation: landscape) {
+    font-size: 1rem;
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+
+  @media screen and (max-width: 768px) and (orientation: landscape) {
+    font-size: 0.9rem;
+    margin: 0.8rem 0;
+    padding-left: 1.3rem;
+  }
+
+  @media screen and (max-width: 480px) and (orientation: landscape) {
+    font-size: 0.8rem;
+    margin: 0.6rem 0;
+    padding-left: 1.2rem;
   }
 `;
 
@@ -558,6 +721,23 @@ const WelcomeCloseButton = styled.button`
     0 0 5px rgba(255, 0, 0, 0.8),
     0 0 10px rgba(255, 0, 0, 0.5);
   animation: buttonFlickerAlt 4s infinite;
+
+  @media screen and (max-width: 1024px) and (orientation: landscape) {
+    padding: 0.8rem 1.5rem;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+  }
+
+  @media screen and (max-width: 768px) and (orientation: landscape) {
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    letter-spacing: 1px;
+  }
+
+  @media screen and (max-width: 480px) and (orientation: landscape) {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.9rem;
+  }
 
   @keyframes buttonFlickerAlt {
     0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
@@ -772,12 +952,14 @@ export default function StrangerLightsContent() {
   };
 
   return (
-    <div className="letter-wall">
-      {/* Hidden audio element */}
-      <audio ref={audioRef} src="/click.wav" preload="auto"/>
-      
-      {/* Reveal Button Overlay */}
-      {showRevealButton && (
+    <>
+      <RotatePrompt />
+      <div className="letter-wall">
+        {/* Hidden audio element */}
+        <audio ref={audioRef} src="/click.wav" preload="auto"/>
+        
+        {/* Reveal Button Overlay */}
+        {showRevealButton && (
         <RevealButtonContainer>
           <div>
             <RevealButton onClick={handleReveal}>
@@ -888,8 +1070,9 @@ export default function StrangerLightsContent() {
             </FooterLink>
           </FooterSection>
         </Footer>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 }
 

@@ -24,6 +24,23 @@ const ShareButtonContainer = styled.button`
     0 0 10px rgba(255, 0, 0, 0.5);
   animation: shareFlicker 4s infinite;
 
+  @media screen and (max-width: 1024px) and (orientation: landscape) {
+    padding: 0.4rem 1rem;
+    font-size: 1.2rem;
+    gap: 0.3rem;
+  }
+
+  @media screen and (max-width: 768px) and (orientation: landscape) {
+    padding: 0.3rem 0.8rem;
+    font-size: 1rem;
+    gap: 0.2rem;
+  }
+
+  @media screen and (max-width: 480px) and (orientation: landscape) {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.9rem;
+  }
+
   @keyframes shareFlicker {
     0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
       opacity: 1;
@@ -72,6 +89,21 @@ const ShareButtonContainer = styled.button`
     width: 20px;
     height: 20px;
     filter: drop-shadow(0 0 3px rgba(255, 0, 0, 0.6));
+
+    @media screen and (max-width: 1024px) and (orientation: landscape) {
+      width: 16px;
+      height: 16px;
+    }
+
+    @media screen and (max-width: 768px) and (orientation: landscape) {
+      width: 14px;
+      height: 14px;
+    }
+
+    @media screen and (max-width: 480px) and (orientation: landscape) {
+      width: 12px;
+      height: 12px;
+    }
   }
 `;
 
@@ -96,6 +128,24 @@ const Toast = styled(motion.div)`
     0 0 10px rgba(255, 0, 0, 0.6),
     0 0 20px rgba(255, 0, 0, 0.4);
   animation: toastFlicker 4s infinite;
+
+  @media screen and (max-width: 1024px) and (orientation: landscape) {
+    bottom: 10px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+
+  @media screen and (max-width: 768px) and (orientation: landscape) {
+    bottom: 8px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  @media screen and (max-width: 480px) and (orientation: landscape) {
+    bottom: 5px;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+  }
 
   @keyframes toastFlicker {
     0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
