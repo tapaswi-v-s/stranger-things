@@ -76,3 +76,44 @@ body {
     transform: rotate(0.5deg) translateY(-3px);
   }
 }
+
+/* Mobile Landscape Orientation Styles */
+@media screen and (max-width: 1024px) and (orientation: landscape) {
+  body {
+    overflow: hidden;
+  }
+
+  .letter-wall {
+    padding: 1rem 0.5rem;
+  }
+
+  .letter-rows-container {
+    gap: 1rem;
+  }
+
+  .letter-row {
+    padding-top: 10px;
+  }
+
+  .letter-row::before {
+    top: 15px;
+  }
+}
+
+/* Mobile Portrait - Show Rotate Message */
+@media screen and (max-width: 1024px) and (orientation: portrait) {
+  .letter-wall {
+    display: none;
+  }
+}
+
+/* Tablet and smaller devices */
+@media screen and (max-width: 1024px) {
+  .letter-wall {
+    padding: 0.5rem 0.25rem;
+  }
+
+  .letter-rows-container {
+    gap: 0.8rem;
+  }
+}

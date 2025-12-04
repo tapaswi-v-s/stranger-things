@@ -26,6 +26,24 @@ const BulbContainer = styled.div<{ color: string }>`
       transform: rotate(-3deg);
     }
   }
+
+  @media screen and (max-width: 1024px) and (orientation: landscape) {
+    width: 20px;
+    height: 30px;
+    margin-bottom: 10px;
+  }
+
+  @media screen and (max-width: 768px) and (orientation: landscape) {
+    width: 16px;
+    height: 24px;
+    margin-bottom: 8px;
+  }
+
+  @media screen and (max-width: 480px) and (orientation: landscape) {
+    width: 14px;
+    height: 20px;
+    margin-bottom: 6px;
+  }
 `;
 
 
@@ -51,6 +69,39 @@ const BulbBase = styled.div<{ isOn: boolean, color: string }>`
     height: 10px;
     background-color: #463E3F;
   }
+
+  @media screen and (max-width: 1024px) and (orientation: landscape) {
+    width: 14px;
+    height: 14px;
+
+    &::before {
+      top: -3px;
+      width: 3px;
+      height: 7px;
+    }
+  }
+
+  @media screen and (max-width: 768px) and (orientation: landscape) {
+    width: 12px;
+    height: 12px;
+
+    &::before {
+      top: -3px;
+      width: 2px;
+      height: 6px;
+    }
+  }
+
+  @media screen and (max-width: 480px) and (orientation: landscape) {
+    width: 10px;
+    height: 10px;
+
+    &::before {
+      top: -2px;
+      width: 2px;
+      height: 5px;
+    }
+  }
 `;
 
 const BulbGlass = styled.div<{ isOn: boolean, color: string }>`
@@ -62,6 +113,21 @@ const BulbGlass = styled.div<{ isOn: boolean, color: string }>`
   height: 25px;
   background-color: ${props => props.isOn ? `rgba(255, 255, 255, 0.2)` : 'rgba(70, 62, 63, 0.2)'};
   border-radius: 45% 45% 45% 45% / 65% 65% 35% 35%;
+
+  @media screen and (max-width: 1024px) and (orientation: landscape) {
+    width: 14px;
+    height: 18px;
+  }
+
+  @media screen and (max-width: 768px) and (orientation: landscape) {
+    width: 12px;
+    height: 15px;
+  }
+
+  @media screen and (max-width: 480px) and (orientation: landscape) {
+    width: 10px;
+    height: 12px;
+  }
 `;
 
 const Bulb: React.FC<BulbProps> = ({ isOn, color }) => {
