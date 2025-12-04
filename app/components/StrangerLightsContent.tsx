@@ -434,6 +434,83 @@ const UpsideDownText = styled.span`
   transform: scaleY(-1);
 `;
 
+const Footer = styled.footer`
+  position: fixed;
+  top: 1rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  font-family: 'Courier New', 'Courier', monospace;
+  font-size: 0.9rem;
+  color: #ff3333;
+  z-index: 100;
+  text-shadow:
+    0 0 3px rgba(255, 0, 0, 0.8),
+    0 0 8px rgba(255, 0, 0, 0.5);
+  animation: footerFlicker 4s infinite;
+
+  @keyframes footerFlicker {
+    0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+      opacity: 1;
+    }
+    20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+      opacity: 0.85;
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    padding: 0 1rem;
+  }
+`;
+
+const FooterSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+const FooterLink = styled.a`
+  color: #ff3333;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid transparent;
+
+  &:hover {
+    color: #ff5555;
+    border-bottom: 1px solid #ff5555;
+    text-shadow:
+      0 0 5px rgba(255, 0, 0, 1),
+      0 0 10px rgba(255, 0, 0, 0.7);
+  }
+`;
+
+const VisitorCounter = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  
+  &::before {
+    content: '👁️';
+    font-size: 1.2rem;
+    animation: blink 3s infinite;
+  }
+
+  @keyframes blink {
+    0%, 49%, 51%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
+`;
+
 const WelcomeList = styled.ul`
   list-style: none;
   padding: 0;
@@ -548,6 +625,8 @@ export default function StrangerLightsContent() {
   const [isObscured, setIsObscured] = useState(false);
   const [playbackCompleted, setPlaybackCompleted] = useState(false);
   const [showWelcomePopup, setShowWelcomePopup] = useState(false);
+  const [visitorCount, setVisitorCount] = useState<number | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -561,6 +640,20 @@ export default function StrangerLightsContent() {
         setShowWelcomePopup(true);
       }, 500);
     }
+  }, []);
+
+  // Track visitor count - only on client side to avoid hydration mismatch
+  useEffect(() => {
+    // Use setTimeout to avoid cascading renders
+    const timer = setTimeout(() => {
+      setIsMounted(true);
+      const currentCount = Number.parseInt(localStorage.getItem('stranger-lights-visitors') || '0', 10);
+      const newCount = currentCount + 1;
+      localStorage.setItem('stranger-lights-visitors', newCount.toString());
+      setVisitorCount(newCount);
+    }, 0);
+    
+    return () => clearTimeout(timer);
   }, []);
 
   const handleCloseWelcome = () => {
@@ -700,7 +793,7 @@ export default function StrangerLightsContent() {
       {/* Welcome Popup for First Time Visitors */}
       <WelcomePopupOverlay show={showWelcomePopup}>
         <WelcomePopup>
-          <WelcomeTitle>Welcome to the <UpsideDownText>Upside Down</UpsideDownText></WelcomeTitle>
+          <WelcomeTitle>Welcome to <UpsideDownText>Upside Down</UpsideDownText></WelcomeTitle>
           <WelcomeList>
             <WelcomeListItem>
               Click letters to spell your message
@@ -765,6 +858,37 @@ export default function StrangerLightsContent() {
             onShare={handleShare}
           />
       </MessageContainer>
+
+      {isMounted && (
+        <Footer>
+          <FooterSection>
+            <VisitorCounter>
+              {visitorCount || 0} Trapped Souls
+            </VisitorCounter>
+          </FooterSection>
+          
+          <FooterSection>
+            Conjured by{' '}
+            <FooterLink 
+              href="https://www.linkedin.com/in/tapaswi-v-s?utm_source=share_via&utm_content=profile&utm_medium=member_android" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              Tapaswi ↗
+            </FooterLink>
+          </FooterSection>
+
+          <FooterSection>
+            <FooterLink 
+              href="https://github.com/tapaswi-v-s/stranger-things" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              🔦 Portal to the Code ↗
+            </FooterLink>
+          </FooterSection>
+        </Footer>
+      )}
     </div>
   );
 }
