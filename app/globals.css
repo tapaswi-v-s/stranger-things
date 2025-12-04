@@ -1,26 +1,78 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&display=swap');
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --primary-dark: #1a1a1a;
+  --spooky-red: #ff1919;
+  --light-glow: rgba(244, 208, 63, 0.6);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+    url('/wall-texture.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  font-family: 'Covered By Your Grace', cursive;
+  overflow: hidden;  /* Prevent scrolling */
+}
+
+.letter-wall {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}
+
+.letter-rows-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.letter-row {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  padding-top: 20px;
+}
+
+/* Curvy wire effect for each row */
+.letter-row::before {
+  content: '';
+  position: absolute;
+  top: 25px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #463E3F;
+  z-index: 1;
+  transform: rotate(0.5deg);
+  animation: wireWave 8s infinite ease-in-out;
+}
+
+.letter-row:nth-child(2)::before {
+  animation-delay: -2s;
+  transform: rotate(-0.5deg);
+}
+
+.letter-row:nth-child(3)::before {
+  animation-delay: -4s;
+  transform: rotate(0.3deg);
+}
+
+@keyframes wireWave {
+  0%, 100% {
+    transform: rotate(0.5deg) translateY(0);
+  }
+  25% {
+    transform: rotate(0.5deg) translateY(3px);
+  }
+  75% {
+    transform: rotate(0.5deg) translateY(-3px);
+  }
 }
