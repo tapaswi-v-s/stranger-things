@@ -1,36 +1,191 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💡 Stranger Lights
 
-## Getting Started
+<div align="center">
 
-First, run the development server:
+![Stranger Lights Banner](https://img.shields.io/badge/Stranger-Lights-ff0000?style=for-the-badge&logo=netflix&logoColor=white)
+
+**An interactive Stranger Things-inspired alphabet wall that brings messages to life with glowing bulbs**
+
+[![Next.js](https://img.shields.io/badge/Next.js-16.0.6-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.2.0-61dafb?style=flat-square&logo=react)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-12.23.25-ff0080?style=flat-square)](https://www.framer.com/motion/)
+
+[✨ View Demo](#) • [🐛 Report Bug](../../issues) • [💡 Request Feature](../../issues)
+
+</div>
+
+---
+
+## 📸 Preview
+
+<div align="center">
+  <img src="public/app.png" alt="Stranger Lights App Screenshot" width="100%">
+</div>
+
+---
+
+## 🌟 About
+
+Remember that iconic scene from Stranger Things where Will Byers communicates through Christmas lights? Now you can create your own messages with this interactive alphabet wall! Click on letters to light them up, spell out messages, and share them with friends.
+
+### ✨ Features
+
+- 🔤 **Interactive Alphabet Wall** - Click on any letter to toggle its light
+- ⚡ **Real-time Updates** - Watch the lights flicker to life with smooth animations
+- 🎵 **Sound Effects** - Authentic clicking sounds for an immersive experience
+- 🔗 **Shareable Messages** - Generate unique URLs to share your illuminated messages
+- 📱 **Responsive Design** - Works seamlessly on desktop and mobile devices
+- 🎨 **Authentic Styling** - Flickering red lights with a vintage aesthetic
+- 🌙 **Dark Theme** - Immersive dark background with textured wall
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18.x or higher
+- npm or yarn
+
+### Installation
+
+1. **Clone the repository**
+
+```bash
+git clone https://github.com/yourusername/stranger-lights.git
+cd stranger-lights
+```
+
+2. **Install dependencies**
+
+```bash
+npm install
+# or
+yarn install
+```
+
+3. **Run the development server**
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. **Open your browser**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Navigate to [http://localhost:3000](http://localhost:3000) to see the app in action!
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🎮 Usage
 
-## Learn More
+1. **Light Up Letters**: Click on any letter to toggle its light on/off
+2. **Create Messages**: Spell out your message by clicking multiple letters
+3. **Share**: Click the share button to generate a unique URL
+4. **Send to Friends**: Share the URL with others to show them your message
 
-To learn more about Next.js, take a look at the following resources:
+### URL Parameters
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The app supports encoding messages in the URL:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+https://yoursite.com/?msg=HELLO
+```
 
-## Deploy on Vercel
+When someone opens this link, the letters H-E-L-L-O will automatically light up!
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🛠️ Tech Stack
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **[Next.js 16](https://nextjs.org/)** - React framework for production
+- **[React 19](https://react.dev/)** - UI library
+- **[TypeScript](https://www.typescriptlang.org/)** - Type safety
+- **[Framer Motion](https://www.framer.com/motion/)** - Smooth animations
+- **[Emotion](https://emotion.sh/)** - CSS-in-JS styling
+- **[Tailwind CSS 4](https://tailwindcss.com/)** - Utility-first CSS
+
+## 📂 Project Structure
+
+```
+stranger-lights/
+├── app/
+│   ├── components/
+│   │   ├── Bulb.tsx              # Individual light bulb component
+│   │   ├── Letter.tsx            # Letter with bulb component
+│   │   ├── ShareButton.tsx       # Share functionality
+│   │   └── StrangerLightsContent.tsx  # Main content component
+│   ├── utils/
+│   │   └── urlHelper.ts          # URL encoding/decoding utilities
+│   ├── useSound.ts               # Custom hook for sound effects
+│   ├── globals.css               # Global styles
+│   ├── layout.tsx                # Root layout
+│   └── page.tsx                  # Home page
+├── public/
+│   ├── click.wav                 # Click sound effect
+│   └── wall-texture.jpg          # Background texture
+└── package.json
+```
+
+## 🎨 Customization
+
+### Changing Colors
+
+Edit the color scheme in `app/components/Letter.tsx` and `app/components/Bulb.tsx`:
+
+```typescript
+// Change the bulb color
+const bulbColor = '#ff0000'; // Red by default
+```
+
+### Adding More Letters
+
+Modify the alphabet array in `app/components/StrangerLightsContent.tsx`:
+
+```typescript
+const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+```
+
+## 🤝 Contributing
+
+**Suggestions are welcomed via PRs & Issues!**
+
+We love contributions! Whether it's:
+- 🐛 Bug fixes
+- ✨ New features
+- 📝 Documentation improvements
+- 🎨 Design enhancements
+
+### How to Contribute
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📜 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 💖 Acknowledgments
+
+- Inspired by the amazing Netflix series **Stranger Things**
+- Built with love for the Stranger Things community
+- Thanks to all contributors who help improve this project
+
+## 📧 Contact
+
+Have questions or suggestions? Feel free to reach out:
+
+- 📧 **Email**: [tapaswisatpanthi@gmail.com](mailto:tapaswisatpanthi@gmail.com)
+- 💼 **LinkedIn**: [Tapaswi V S](https://www.linkedin.com/in/tapaswi-v-s)
+- 🐛 [Open an issue](../../issues)
+- 💬 Start a [discussion](../../discussions)
+- ⭐ Star this repo if you like it!
+
+---
+
+<div align="center">
+
+Made with 💡 and ❤️
+
+**[⬆ back to top](#-stranger-lights)**
+
+</div>
