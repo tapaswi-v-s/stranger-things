@@ -17,6 +17,7 @@ body {
   min-height: 100vh;
   font-family: 'Covered By Your Grace', cursive;
   overflow: hidden;  /* Prevent scrolling on desktop */
+  background-color: #000000;  /* Fallback black color */
 }
 
 /* Allow scrolling on mobile landscape */
@@ -24,6 +25,12 @@ body {
   body {
     overflow-y: auto;
     overflow-x: hidden;
+    background-attachment: scroll;  /* Change to scroll for better mobile performance */
+    min-height: 100%;
+  }
+  
+  html {
+    background-color: #000000;  /* Ensure HTML element also has black background */
   }
 }
 
@@ -92,6 +99,11 @@ body {
     padding: 1rem 0.5rem 2rem 0.5rem;
     min-height: 100vh;
     height: auto;
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+      url('/wall-texture.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: scroll;
   }
 
   .letter-rows-container {
