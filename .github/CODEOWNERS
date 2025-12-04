@@ -1,0 +1,30 @@
+# CODEOWNERS file for Stranger Lights
+# This file defines individuals or teams that are responsible for code in this repository.
+# 
+# Each line is a file pattern followed by one or more owners.
+# These owners will be automatically requested for review when someone 
+# opens a pull request that modifies files matching the pattern.
+#
+# More info: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owner for everything in the repo
+# Unless a later match takes precedence, @tapaswi-v-s will be requested for review
+*       @tapaswi-v-s
+
+# Specific ownership rules (you can customize these as needed)
+
+# Core application components
+/app/                   @tapaswi-v-s
+
+# Configuration files
+*.json                  @tapaswi-v-s
+*.ts                    @tapaswi-v-s
+*.tsx                   @tapaswi-v-s
+*.config.*              @tapaswi-v-s
+
+# Documentation
+*.md                    @tapaswi-v-s
+
+# Public assets
+/public/                @tapaswi-v-s
+
