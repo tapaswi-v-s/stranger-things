@@ -314,7 +314,7 @@ const RevealSubtext = styled.div`
 const letterRows = [
   'ABCDEFGH'.split(''),
   'IJKLMNOPQR'.split(''),
-  'STUVWXYZ'.split('')
+  'STUVWXYZ._'.split('')
 ];
 
 const colors = [
