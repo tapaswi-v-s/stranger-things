@@ -1,6 +1,6 @@
 'use client';
 
-import {useRef, useMemo, useState} from 'react';
+import {useRef, useMemo, useState, useEffect} from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import styled from '@emotion/styled';
 import Letter from './Letter';
@@ -310,6 +310,220 @@ const RevealSubtext = styled.div`
   }
 `;
 
+const WelcomePopupOverlay = styled.div<{ show: boolean }>`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.97);
+  z-index: 2000;
+  opacity: ${props => props.show ? 1 : 0};
+  visibility: ${props => props.show ? 'visible' : 'hidden'};
+  transition: opacity 1s ease-in, visibility 1s ease-in;
+`;
+
+const WelcomePopup = styled.div`
+  background: rgba(10, 0, 0, 0.95);
+  border: 3px solid #ff0000;
+  border-radius: 12px;
+  padding: 3rem 4rem;
+  max-width: 600px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 0 30px rgba(255, 0, 0, 0.6),
+    0 0 60px rgba(255, 0, 0, 0.4),
+    inset 0 0 20px rgba(255, 0, 0, 0.1);
+  animation: popupFlicker 4s infinite;
+
+  /* Spooky tree branches creeping from top-left */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 250px;
+    background-image: 
+      linear-gradient(45deg, #1a0000 0%, #1a0000 8px, transparent 8px),
+      linear-gradient(55deg, #1a0000 0%, #1a0000 6px, transparent 6px),
+      linear-gradient(35deg, #1a0000 0%, #1a0000 5px, transparent 5px),
+      linear-gradient(60deg, #0d0000 0%, #0d0000 4px, transparent 4px),
+      linear-gradient(40deg, #0d0000 0%, #0d0000 7px, transparent 7px),
+      radial-gradient(circle at 20% 20%, #1a0000 0%, #1a0000 15%, transparent 30%);
+    background-size: 80px 100px, 60px 120px, 50px 80px, 40px 90px, 70px 110px, 80px 80px;
+    background-position: 0 0, 20px 10px, 10px 30px, 30px 20px, 15px 40px, 0 0;
+    background-repeat: no-repeat;
+    opacity: 0.9;
+    pointer-events: none;
+    z-index: 1;
+    filter: blur(1px);
+  }
+
+  /* Spooky tree branches creeping from bottom-right */
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 280px;
+    height: 280px;
+    background-image: 
+      linear-gradient(-45deg, #1a0000 0%, #1a0000 9px, transparent 9px),
+      linear-gradient(-55deg, #1a0000 0%, #1a0000 7px, transparent 7px),
+      linear-gradient(-35deg, #1a0000 0%, #1a0000 6px, transparent 6px),
+      linear-gradient(-60deg, #0d0000 0%, #0d0000 5px, transparent 5px),
+      linear-gradient(-40deg, #0d0000 0%, #0d0000 8px, transparent 8px),
+      linear-gradient(-50deg, #0d0000 0%, #0d0000 4px, transparent 4px),
+      radial-gradient(circle at 80% 80%, #1a0000 0%, #1a0000 18%, transparent 35%);
+    background-size: 90px 110px, 70px 130px, 60px 90px, 50px 100px, 80px 120px, 45px 85px, 100px 100px;
+    background-position: 0 0, 25px 15px, 15px 35px, 35px 25px, 20px 45px, 40px 10px, 0 0;
+    background-repeat: no-repeat;
+    opacity: 0.9;
+    pointer-events: none;
+    z-index: 1;
+    filter: blur(1px);
+  }
+
+  /* Ensure content is above the branches */
+  > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  @keyframes popupFlicker {
+    0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+      opacity: 1;
+      box-shadow: 
+        0 0 40px rgba(255, 0, 0, 0.7),
+        0 0 80px rgba(255, 0, 0, 0.5),
+        inset 0 0 25px rgba(255, 0, 0, 0.15);
+    }
+    20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+      opacity: 0.9;
+      box-shadow: 
+        0 0 20px rgba(255, 0, 0, 0.4),
+        0 0 40px rgba(255, 0, 0, 0.3),
+        inset 0 0 15px rgba(255, 0, 0, 0.1);
+    }
+  }
+`;
+
+const WelcomeTitle = styled.h2`
+  font-family: 'Courier New', 'Courier', monospace;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #ff4444;
+  text-align: center;
+  margin: 0 0 2rem 0;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 5px rgba(255, 0, 0, 0.8),
+    0 0 10px rgba(255, 0, 0, 0.6),
+    0 0 20px rgba(255, 0, 0, 0.4),
+    0 0 30px rgba(255, 0, 0, 0.2);
+`;
+
+const UpsideDownText = styled.span`
+  display: inline-block;
+  transform: scaleY(-1);
+`;
+
+const WelcomeList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+`;
+
+const WelcomeListItem = styled.li`
+  font-family: 'Courier New', 'Courier', monospace;
+  font-size: 1.2rem;
+  color: #ff3333;
+  margin: 1.5rem 0;
+  padding-left: 2rem;
+  position: relative;
+  text-shadow:
+    0 0 5px rgba(255, 0, 0, 0.8),
+    0 0 10px rgba(255, 0, 0, 0.5);
+
+  &::before {
+    content: '💡';
+    position: absolute;
+    left: 0;
+    filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.6));
+  }
+`;
+
+const WelcomeCloseButton = styled.button`
+  width: 100%;
+  padding: 1rem 2rem;
+  font-family: 'Courier New', 'Courier', monospace;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  background: rgba(10, 0, 0, 0.9);
+  border: 2px solid #ff0000;
+  color: #ff3333;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 0 15px rgba(255, 0, 0, 0.5),
+    0 0 30px rgba(255, 0, 0, 0.3),
+    inset 0 0 15px rgba(255, 0, 0, 0.1);
+  text-shadow:
+    0 0 5px rgba(255, 0, 0, 0.8),
+    0 0 10px rgba(255, 0, 0, 0.5);
+  animation: buttonFlickerAlt 4s infinite;
+
+  @keyframes buttonFlickerAlt {
+    0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+      opacity: 1;
+      text-shadow:
+        0 0 8px rgba(255, 0, 0, 0.8),
+        0 0 15px rgba(255, 0, 0, 0.5);
+      box-shadow: 
+        0 0 20px rgba(255, 0, 0, 0.6),
+        0 0 40px rgba(255, 0, 0, 0.4),
+        inset 0 0 20px rgba(255, 0, 0, 0.15);
+    }
+    20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+      opacity: 0.85;
+      text-shadow:
+        0 0 5px rgba(255, 0, 0, 0.6),
+        0 0 10px rgba(255, 0, 0, 0.3);
+      box-shadow: 
+        0 0 10px rgba(255, 0, 0, 0.3),
+        0 0 20px rgba(255, 0, 0, 0.2),
+        inset 0 0 10px rgba(255, 0, 0, 0.1);
+    }
+  }
+
+  &:hover {
+    background: rgba(20, 0, 0, 0.95);
+    border-color: #ff3333;
+    color: #ff5555;
+    box-shadow: 
+      0 0 25px rgba(255, 0, 0, 0.7),
+      0 0 50px rgba(255, 0, 0, 0.5),
+      inset 0 0 25px rgba(255, 0, 0, 0.2);
+    text-shadow:
+      0 0 10px rgba(255, 0, 0, 1),
+      0 0 20px rgba(255, 0, 0, 0.7);
+    transform: scale(1.02);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+`;
+
 // Split letters into three rows
 const letterRows = [
   'ABCDEFGH'.split(''),
@@ -333,9 +547,26 @@ export default function StrangerLightsContent() {
   const [hasRevealed, setHasRevealed] = useState(false);
   const [isObscured, setIsObscured] = useState(false);
   const [playbackCompleted, setPlaybackCompleted] = useState(false);
+  const [showWelcomePopup, setShowWelcomePopup] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const searchParams = useSearchParams();
   const router = useRouter();
+
+  // Check if this is the first visit
+  useEffect(() => {
+    const hasVisited = localStorage.getItem('stranger-lights-visited');
+    if (!hasVisited) {
+      // Delay to allow page to load first
+      setTimeout(() => {
+        setShowWelcomePopup(true);
+      }, 500);
+    }
+  }, []);
+
+  const handleCloseWelcome = () => {
+    setShowWelcomePopup(false);
+    localStorage.setItem('stranger-lights-visited', 'true');
+  };
 
   // Get message from URL
   const urlMessage = useMemo(() => {
@@ -465,6 +696,27 @@ export default function StrangerLightsContent() {
           </div>
         </RevealButtonContainer>
       )}
+
+      {/* Welcome Popup for First Time Visitors */}
+      <WelcomePopupOverlay show={showWelcomePopup}>
+        <WelcomePopup>
+          <WelcomeTitle>Welcome to the <UpsideDownText>Upside Down</UpsideDownText></WelcomeTitle>
+          <WelcomeList>
+            <WelcomeListItem>
+              Click lights to spell your message
+            </WelcomeListItem>
+            <WelcomeListItem>
+              Share the URL with friends
+            </WelcomeListItem>
+            <WelcomeListItem>
+              Watch the lights flicker to life
+            </WelcomeListItem>
+          </WelcomeList>
+          <WelcomeCloseButton onClick={handleCloseWelcome}>
+            Got it!
+          </WelcomeCloseButton>
+        </WelcomePopup>
+      </WelcomePopupOverlay>
       
       <div className="letter-rows-container">
         {letterRows.map((row, rowIndex) => (
