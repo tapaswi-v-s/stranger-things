@@ -11,7 +11,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-12.23.25-ff0080?style=flat-square)](https://www.framer.com/motion/)
 
-[✨ View Demo](#) • [🐛 Report Bug](../../issues) • [💡 Request Feature](../../issues)
+[✨ View Demo](https://www.linkedin.com/posts/tapaswi-v-s_upsidedown-strangerthings-strangerthings-activity-7402500202538020864-k_2I?utm_source=share&utm_medium=member_desktop&rcm=ACoAABoXfvsBmyiQpzKa8stRlfBbdKiaEQ9HWEo) • [🐛 Report Bug](../../issues) • [💡 Request Feature](../../issues)
 
 </div>
 
@@ -51,7 +51,7 @@ Remember that iconic scene from Stranger Things where Will Byers communicates th
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/yourusername/stranger-lights.git
+git clone https://github.com/tapaswi-v-s/stranger-lights.git
 cd stranger-lights
 ```
 
@@ -87,7 +87,7 @@ Navigate to [http://localhost:3000](http://localhost:3000) to see the app in act
 The app supports encoding messages in the URL:
 
 ```
-https://yoursite.com/?msg=HELLO
+https://stranger-things-omega.vercel.app/?m=UlVO
 ```
 
 When someone opens this link, the letters H-E-L-L-O will automatically light up!
