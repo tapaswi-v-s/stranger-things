@@ -1,4 +1,5 @@
 import './globals.css'
+import Script from 'next/script'
 
 export const metadata = {
   title: 'Stranger Things Lights',
@@ -18,7 +19,10 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Script src="https://www.youtube.com/iframe_api" strategy="lazyOnload" />
+      </body>
     </html>
   )
 }

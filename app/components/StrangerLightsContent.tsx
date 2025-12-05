@@ -7,6 +7,7 @@ import Letter from './Letter';
 import { ShareButton } from './ShareButton';
 import { encodeMessage, decodeMessage } from '../utils/urlHelper';
 import RotatePrompt from './RotatePrompt';
+import BackgroundMusic, { BackgroundMusicHandle } from './BackgroundMusic';
 
 const MessageBox = styled.div`
   flex: 1;
@@ -807,7 +808,9 @@ export default function StrangerLightsContent() {
   const [showWelcomePopup, setShowWelcomePopup] = useState(false);
   const [visitorCount, setVisitorCount] = useState<number | null>(null);
   const [isMounted, setIsMounted] = useState(false);
+  const [isMusicMuted, setIsMusicMuted] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const musicRef = useRef<BackgroundMusicHandle | null>(null);
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -822,7 +825,7 @@ export default function StrangerLightsContent() {
     }
   }, []);
 
-  // Track visitor count - only on client side to avoid hydration mismatch
+  // Track visitor count and music mute state - only on client side to avoid hydration mismatch
   useEffect(() => {
     // Use setTimeout to avoid cascading renders
     const timer = setTimeout(() => {
@@ -831,6 +834,10 @@ export default function StrangerLightsContent() {
       const newCount = currentCount + 1;
       localStorage.setItem('stranger-lights-visitors', newCount.toString());
       setVisitorCount(newCount);
+      
+      // Set initial mute state based on whether music has played before
+      const hasPlayedBefore = localStorage.getItem('stranger-lights-music-played');
+      setIsMusicMuted(hasPlayedBefore === 'true');
     }, 0);
     
     return () => clearTimeout(timer);
@@ -839,6 +846,13 @@ export default function StrangerLightsContent() {
   const handleCloseWelcome = () => {
     setShowWelcomePopup(false);
     localStorage.setItem('stranger-lights-visited', 'true');
+  };
+
+  const toggleMusic = () => {
+    if (musicRef.current) {
+      const newMutedState = musicRef.current.toggleMute();
+      setIsMusicMuted(newMutedState);
+    }
   };
 
   // Get message from URL
@@ -953,6 +967,7 @@ export default function StrangerLightsContent() {
 
   return (
     <>
+      <BackgroundMusic ref={musicRef} />
       <RotatePrompt />
       <div className="letter-wall">
         {/* Hidden audio element */}
@@ -1050,6 +1065,25 @@ export default function StrangerLightsContent() {
           </FooterSection>
           
           <FooterSection>
+            <IconButton 
+              onClick={toggleMusic}
+              title={isMusicMuted ? "Unmute music" : "Mute music"}
+              style={{ marginRight: '1rem' }}
+            >
+              {isMusicMuted ? (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  <line x1="23" y1="9" x2="17" y2="15" />
+                  <line x1="17" y1="9" x2="23" y2="15" />
+                </svg>
+              ) : (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                </svg>
+              )}
+            </IconButton>
             Conjured by{' '}
             <FooterLink 
               href="https://www.linkedin.com/in/tapaswi-v-s?utm_source=share_via&utm_content=profile&utm_medium=member_android" 
